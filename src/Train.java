@@ -187,6 +187,14 @@ public class Train {
             return sum;
         }
 
+        private boolean containsDouble(int startNode){
+            for (Node node : this.adjacencyList.get(startNode)) {
+                if(node.getValue() == startNode)
+                    return true;
+            }
+            return false;
+        }
+
         /**
          * Perform a search for the longest possible train
          */
@@ -195,9 +203,12 @@ public class Train {
 
 //            System.out.println("starting node value: " + startNode);
             try {
+                // check if adjacency list for startNode contains double
+                boolean containsDouble = this.containsDouble(startNode);
+
                 for (Node node : this.adjacencyList.get(startNode)) {
 
-                    // Checks if we have already visited the edge between the two nodes
+                    // Checks if we have already visited the edge between the two nodes (or already used this domino)
                     boolean containsNode = false;
                     for (Node subNode : this.edgeList.get(startNode)) {
                         if (subNode.getValue() == node.getValue()) {
@@ -209,23 +220,25 @@ public class Train {
                     // if double we do recursion but we just save up to 3 paths- we don't delete the current path when
                     // we go back to the double and iterate down another path
 
-                    System.out.println("child node value: " + node.getValue());
-                    System.out.println("Current path contains " + node.getValue() + " : " + currentPath.contains(node.getValue()));
-                    System.out.println("EdgeList contains " + startNode + "->" + node + " : " + containsNode);
+//                    System.out.println("child node value: " + node.getValue());
+//                    System.out.println("Current path contains " + node.getValue() + " : " + currentPath.contains(node.getValue()));
+//                    System.out.println("EdgeList contains " + startNode + "->" + node + " : " + containsNode);
 
+                    // if the node is not in the current path or in the list of already visited nodes
                     if (!currentPath.contains(node.getValue()) || !containsNode) {
+                        // add node to current path
                         currentPath.add(node.getValue());
 
-                        System.out.print("currentPath:  ");
-                        for (int i = 0; i < currentPath.size(); i++)
-                            System.out.print(currentPath.get(i) + ", ");
-                        System.out.print("\n");
+//                        System.out.print("currentPath:  ");
+//                        for (int i = 0; i < currentPath.size(); i++)
+//                            System.out.print(currentPath.get(i) + ", ");
+//                        System.out.print("\n");
 
 //                    System.out.println("EdgeList contains the node in the startNode list: " + containsNode);
                         if (!containsNode) {
                             this.edgeList.get(startNode).add(node);
                             this.edgeList.get(node.getValue()).add(new Node(startNode, startNode + node.getValue()));
-                            this.printEdgeList();
+//                            this.printEdgeList();
                         }
 
                         // if the current path is longer than the longest path, set this as the longest path
@@ -243,10 +256,15 @@ public class Train {
                             }
                         }
 
-                        System.out.print("longest Path:  ");
-                        for (int i = 0; i < longestPath.size(); i++)
-                            System.out.print(longestPath.get(i) + ", ");
-                        System.out.print("\n");
+//                        System.out.print("longest Path:  ");
+//                        for (int i = 0; i < longestPath.size(); i++)
+//                            System.out.print(longestPath.get(i) + ", ");
+//                        System.out.print("\n");
+
+                        // check if node is a double
+                        // if node is double, save the current path
+                        // if we have more than 3 options coming off double, take the 3 with most points
+
 
                         // Use recursion to explore the child nodes of the current node in our path
                         findLongestTrain(node.getValue(), currentPath, longestPath);
@@ -402,9 +420,10 @@ public class Train {
                 Collections.replaceAll(train, 25, 0);
                 System.out.println(train.get(i) + "," + train.get(i + 1));
             }
+            }
         }
     }
-}
+
 
 
 

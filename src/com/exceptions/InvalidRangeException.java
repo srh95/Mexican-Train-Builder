@@ -1,7 +1,9 @@
+package com.exceptions;
+
 public class InvalidRangeException extends Exception{
 
 
-    InvalidRangeException(String message){
+    public InvalidRangeException(String message){
         super(message);
     }
 }

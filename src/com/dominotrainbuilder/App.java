@@ -1,7 +1,8 @@
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+package com.dominotrainbuilder;
+
+import com.exceptions.InvalidRangeException;
+
+import java.util.*;
 
 public class App {
 
@@ -65,6 +66,7 @@ public class App {
         return startingDom;
     }
 
+    /** Returns an array list of dominoes which represents the user's hand */
     public List<Domino> getUserHand(int numDom, int startingDom) {
         System.out.println("\nNow enter your dominoes. Type a domino in the format number,number. Order doesn't " +
                 "matter. \nFor example, a domino with a 5 and a 4 can be entered as 5,4 or 4,5. Note: a blank should be" +
@@ -108,12 +110,12 @@ public class App {
                                 "currently the starting double.");
 
                     // Convert blanks to point value 25
-                    if(value1 == 0)
-                        value1 = 25;
-                    if(value2 == 0)
-                        value2 = 25;
-                    if(startingDom == 0)
-                        startingDom = 25;
+//                    if(value1 == 0)
+//                        value1 = 25;
+//                    if(value2 == 0)
+//                        value2 = 25;
+//                    if(startingDom == 0)
+//                        startingDom = 25;
 
                     // Check that this domino hasn't already been entered
                     for(Domino d : dominoesInHand){
@@ -142,13 +144,21 @@ public class App {
     }
 
     /** Displays the longest train */
-    public void displayLongestTrain(TrainBuilder longestTrain) {
-        // Implement code to display the longest train.
+    public void displayLongestTrain(List<Domino> train) {
+        int trainSize = train.size()-1;
+        if (trainSize > 0) {
+            System.out.println("Train size: " + trainSize);
+            System.out.println("You can build the following train: ");
+
+            for (int i = 0; i < train.size(); i++) {
+                System.out.println(train.get(i).getSide1() + "," + train.get(i).getSide2());
+            }
+        }
     }
 
 
     /** Displays the train with the most points */
-    public void displayHighestPointTrain(TrainBuilder highestPointTrain) {
+    public void displayHighestPointTrain(List<Domino> highestPointTrain) {
         // Implement code to display the highest point train.
     }
 
@@ -156,11 +166,14 @@ public class App {
     public static void main(String[] args){
 
         App mexicanTrain = new App();
+        TrainBuilder builder = new TrainBuilder();
 
         int numDominoes = mexicanTrain.getNumberOfDominoes();
         int startingDomino = mexicanTrain.getStartingDomino();
         List<Domino> userHand = mexicanTrain.getUserHand(numDominoes, startingDomino);
+        List<Domino> longestTrain = builder.findLongestTrain(userHand, startingDomino);
 
+        mexicanTrain.displayLongestTrain(longestTrain);
 
     }
 }

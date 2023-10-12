@@ -1,5 +1,4 @@
 package com.dominotrainbuilder;
-
 import com.dominotrainbuilder.Domino;
 
 import java.util.ArrayList;
@@ -9,10 +8,13 @@ public class TrainBuilder {
 
     /**
      * Helper method to calculate the sum of the integers in an array list
+     *
+     * @param train: a list of dominoes
+     * @return sum: the total number of points in this domino train
      */
-    private int findSum(List<Domino> path) {
+    private int findSum(List<Domino> train) {
         int sum = 0;
-        for (Domino d : path){
+        for (Domino d : train){
             // Check whether the domino has 0s on either side
             if (d.getSide1() == 0 || d.getSide2() == 0) {
                 // Add 25 points for each 0 on the domino
@@ -67,7 +69,7 @@ public class TrainBuilder {
     }
 
     /** Helper method to find the longest train of dominoes */
-    public void exploreTrain(List<Domino> remainingHand, List<Domino> currentPath, List<Domino> longestTrain){
+    private void exploreTrain(List<Domino> remainingHand, List<Domino> currentPath, List<Domino> longestTrain){
         // Gets the last domino in the current path we are building
         Domino lastDomino = currentPath.get(currentPath.size() - 1);
         int lastValue = lastDomino.getSide2();

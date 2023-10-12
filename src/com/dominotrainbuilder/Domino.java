@@ -1,4 +1,5 @@
 package com.dominotrainbuilder;
+import java.util.Objects;
 
 /**
  * Class represents a domino which has two sides, each containing a number of pips in the range 0-12
@@ -44,5 +45,20 @@ public class Domino {
     @Override
     public String toString() {
         return side1 + "," + side2;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Domino domino = (Domino) o;
+        return (this.side1 == domino.side1 && this.side2 == domino.side2) ||
+                (this.side1 == domino.side2 && this.side2 == domino.side1);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(side1, side2);
     }
 }

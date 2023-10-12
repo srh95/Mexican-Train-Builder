@@ -1,6 +1,10 @@
 package com.dominotrainbuilder;
-
+//package com.exceptions;
+import com.dominotrainbuilder.TrainBuilder;
+import com.dominotrainbuilder.Domino;
 import com.exceptions.InvalidRangeException;
+
+import com.dominotrainbuilder.TrainBuilder;
 
 import java.util.*;
 
@@ -108,14 +112,6 @@ public class App {
                     if(value1 == startingDom && value2 == startingDom)
                         throw new InvalidRangeException("Invalid input. You cannot enter the double domino that is " +
                                 "currently the starting double.");
-
-                    // Convert blanks to point value 25
-//                    if(value1 == 0)
-//                        value1 = 25;
-//                    if(value2 == 0)
-//                        value2 = 25;
-//                    if(startingDom == 0)
-//                        startingDom = 25;
 
                     // Check that this domino hasn't already been entered
                     for(Domino d : dominoesInHand){
